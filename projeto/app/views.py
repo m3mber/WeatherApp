@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from urllib.request import urlopen
 
 # Create your views here.
-def base(request):
+def index(request):
     return render(request, 'index.html')
 
 def forecast(request):
