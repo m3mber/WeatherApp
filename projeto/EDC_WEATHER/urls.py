@@ -18,7 +18,9 @@ from django.urls import path
 from app import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('base/', views.base),
-    path('forecast/', views.forecast),
+	path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
+    path('admin/', admin.site.urls, name='admin'),
+    path('forecast/', views.forecast, name='forecast'),
+    path('weather/', views.weather_card, name='weathercard'),
 ]
