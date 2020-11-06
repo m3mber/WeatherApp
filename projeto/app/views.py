@@ -35,4 +35,4 @@ def forecast(request):
 
 
 def weather_card(request):
-    return render(request, 'weather_card.html')
+    return render(request, 'weather_card.xsl')
