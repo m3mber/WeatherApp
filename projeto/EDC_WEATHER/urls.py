@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('forecast_city/', views.forecast_city, name='forecast_city'),
     path('weather/', views.weather_card, name='weathercard'),
+    path('waves/', views.waves_card, name='ondulacao'),
 ]

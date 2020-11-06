@@ -73,3 +73,6 @@ def forecast_city(request):
 
 def weather_card(request):
     return render(request, 'weather_card.xsl')
+
+def waves_card(request):
+    return render(request, 'ondulacao.html')
