@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
         {% block content %}
 
-        <div class="row p-0 m-0 container mainsection p-2 text-center items-align-center">
-            <div class="col-lg-14 pb-4 text-center">
-                <h1>WeatherNow</h1>
+        <div class="h-100 d-inline-block">
+            <br><br><br>
+            <br><br><br>
+            <br><br><br>
+            <br>
+
+            <div class="my-container">
+                <div class="col-lg-14 pb-4">
+                    <h1>WeatherNow</h1>
+                </div>
             </div>
-        </div>
 
-        <div class="row p-0 m-0 container mainsection p-2 text-center items-align-center">
-            <div class="col-lg-14 pb-4 text-center">
-                <h3>Veja a previsão meteorológica da sua cidade</h3>
+            <div class="my-container">
+                <div class="col-lg-14 pb-4 text-center">
+                    <h4>Veja a previsão meteorológica da sua cidade</h4>
+                </div>
             </div>
-        </div>
 
-
-        <div class="row p-0 m-0 container mainsection p-2 text-center items-align-center">
+            <div class="d-inline-block text-center items-align-center">
                 <form class="user" action="{% url 'forecast_city' %}" method="post">
-                    <div class="row text-center">
-                        <div class="form-group">
-                            <input type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" placeholder="Introduza a sua cidade.. (Ex: rio de janeiro)">
-                        </div>
-                        <div class="form-group">
-                            {% csrf_token %}
-                            <p><input type="submit" value="Pesquisar"></p>
-                        </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" placeholder="Introduza a sua cidade">
                     </div>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-info waves-effect btn-md">Pesquisar</button>
                 </form>
-        </div>
+            </div>
 
+            <br><br><br>
+            <br><br><br>
+            <br><br><br>
+            <br><br><br>
+        </div>
         {% endblock %}

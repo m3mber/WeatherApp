@@ -6,10 +6,10 @@
 
 
         {% block content %}
-        
-            <!--/.Weather Widget -->
+
+                        <!--/.Weather Widget -->
             <div class="row p-0 m-0 container mainsection p-2 text-center">
-                <h4 class="h4-responsive">Nome da Cidade</h4> 
+                <h4 class="h4-responsive">Nome da Cidade</h4>
                 <div class="col-lg-14 pb-4 text-center">
                     <div class="weather-part-second border text-center">
                         <div class="row text-center">
@@ -60,6 +60,7 @@
                     </div>
                 </div>
             </div>
+
         {% endblock %}
 
 
