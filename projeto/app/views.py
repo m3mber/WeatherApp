@@ -106,9 +106,15 @@ def waves_card(request):
             ondas_template = transform(xml_ondas)
             data_pt = day_card()
 
+            xslt_path = os.path.join(BASE_DIR, "app", "static","xml","previsao_mar.xsl")
+            xslt_file = etree.parse(xslt_path)
+            transform = etree.XSLT(xslt_file)
+            image_template = transform(xml_ondas)
+
             context = {
                 'city_name':city_name,
                 'forecast':ondas_template,
+                'image': image_template,
                 'day': data_pt,
             }
         else:
