@@ -99,24 +99,31 @@ def waves_card(request):
             with urlopen(url_ondas) as d:
                 xml_ondas = etree.parse(d)
 
-            #Template da ondulação
-            xslt_path = os.path.join(BASE_DIR, "app", "static","xml","ondulacao.xsl")
-            xslt_file = etree.parse(xslt_path)
-            transform = etree.XSLT(xslt_file)
-            ondas_template = transform(xml_ondas)
-            data_pt = day_card()
+            if xml_ondas.xpath('//nome')[0].text == '' or xml_ondas.xpath('//nome')[0].text == 'undefined':
+                context = {
+                    'city_name': city_name,
+                    'forecast': '',
+                    'image': '',
+                    'day': day_card(),
+                }
+            else:
+                #Template da ondulação
+                xslt_path = os.path.join(BASE_DIR, "app", "static","xml","ondulacao.xsl")
+                xslt_file = etree.parse(xslt_path)
+                transform = etree.XSLT(xslt_file)
+                ondas_template = transform(xml_ondas)
 
-            xslt_path = os.path.join(BASE_DIR, "app", "static","xml","previsao_mar.xsl")
-            xslt_file = etree.parse(xslt_path)
-            transform = etree.XSLT(xslt_file)
-            image_template = transform(xml_ondas)
+                xslt_path = os.path.join(BASE_DIR, "app", "static","xml","previsao_mar.xsl")
+                xslt_file = etree.parse(xslt_path)
+                transform = etree.XSLT(xslt_file)
+                image_template = transform(xml_ondas)
 
-            context = {
-                'city_name':city_name,
-                'forecast':ondas_template,
-                'image': image_template,
-                'day': data_pt,
-            }
+                context = {
+                    'city_name': city_name,
+                    'forecast': ondas_template,
+                    'image': image_template,
+                    'day': day_card(),
+                }
         else:
             context = {
                 'day':day_card(),
