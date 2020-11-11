@@ -20,6 +20,15 @@
                             {{ forecast | safe}}
                         </div>
                     </div>
+                    <div class="card-body bg-white">
+                        <form class="user" action="{% url 'ondulacao' %}" method="post">
+                            <div hidden class="form-group mx-sm-3 mb-2">
+                                <input hiddden type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" value="{{city_name}}">
+                            </div>
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-info waves-effect btn-md">Ondulação: {{city_name}}</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

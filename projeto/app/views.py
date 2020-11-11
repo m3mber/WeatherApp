@@ -9,7 +9,7 @@ from EDC_WEATHER.settings import BASE_DIR
 import urllib.request
 import xml.etree.ElementTree as ET
 from urllib.request import urlopen
-
+from BaseXClient import BaseXClient
 
 # Create your views here.
 def index(request):
@@ -19,37 +19,13 @@ def index(request):
 #********************* 7 DAY WEATHER WIDGET ********************************
 #*****************************************************************************
 def forecast_city(request):
-    city_id=0
+    
     if 'cityText' in request.POST:
         city_name=request.POST['cityText']
-        city_name=unicodedata.normalize('NFD', city_name.lower())\
-           .encode('ascii', 'ignore')\
-           .decode("utf-8")
-        c_n=re.sub(r"[^\w\s]", '', city_name)
-        c_n=re.sub(r"\s+", '%20', c_n)
-
-        url_city="http://servicos.cptec.inpe.br/XML/listaCidades?city="+c_n
-        f = urlopen(url_city).read()
-
-
-        xml_city=etree.fromstring(f)
-
-
-
-        query = "//cidades/cidade"
-
-        cities = xml_city.xpath(query)
-
-        for c in cities:
-            name = c.find('nome').text.lower()
-            name = unicodedata.normalize('NFD', name)\
-           		.encode('ascii', 'ignore')\
-           		.decode("utf-8")
-            if name == city_name:
-                city_id = c.find('id').text
+        city_id= findCityId(city_name)
 
         if city_id!=0:
-            url_forecast = 'http://servicos.cptec.inpe.br/XML/cidade/7dias/'+city_id+'/previsao.xml'
+            url_forecast = 'http://servicos.cptec.inpe.br/XML/cidade/7dias/'+str(city_id)+'/previsao.xml'
             with urlopen(url_forecast) as d:
                 xml_forecast = etree.parse(d)
             #xml_forecast = urlopen(url_forecast)
@@ -88,14 +64,13 @@ def forecast_city(request):
 
 #*********************************************************************************************
 def waves_card(request):
-
     
     if 'cityText' in request.POST:
         city_name=request.POST['cityText']
         city_id= findCityId(city_name)
 
         if city_id!=0:
-            url_ondas = 'http://servicos.cptec.inpe.br/XML/cidade/' + city_id +'/dia/0/ondas.xml'
+            url_ondas = 'http://servicos.cptec.inpe.br/XML/cidade/' + str(city_id) +'/dia/0/ondas.xml'
             with urlopen(url_ondas) as d:
                 xml_ondas = etree.parse(d)
 
@@ -142,7 +117,39 @@ def waves_card(request):
 ########################################################################################
 
 def findCityId(city_name):
+	# create session
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     city_id = 0
+    try:
+        city_name=unicodedata.normalize('NFD', city_name.lower())\
+            .encode('ascii', 'ignore')\
+            .decode("utf-8")
+        c_n=re.sub(r"[^\w\s]", '', city_name)
+        c_n=re.sub(r"\s+", '%20', c_n)
+        url_city="http://servicos.cptec.inpe.br/XML/listaCidades?city="+c_n
+
+        # create new database
+        xml = urlopen(url_city).read().decode("iso-8859-1")
+        session.create("cidades", str(xml))
+
+        query = "let $cs := doc('cidades') for $c in $cs//cidade where lower-case($c/nome)='" + city_name + "' return $c/id/text()"
+        queryResult = session.query(query)
+        
+	    # loop through all results
+        for typecode, item in queryResult.iter():
+            city_id = int(item)
+
+        # close query object
+        queryResult.close()
+
+    finally:
+        # close session
+        if session:
+            session.close()
+
+    return city_id
+    
+    """city_id = 0
     city_name=unicodedata.normalize('NFD', city_name.lower())\
         .encode('ascii', 'ignore')\
         .decode("utf-8")
@@ -164,9 +171,9 @@ def findCityId(city_name):
             .encode('ascii', 'ignore')\
             .decode("utf-8")
         if name == city_name:
-            city_id = c.find('id').text
+            city_id = c.find('id').text"""
 
-    return city_id
+    
 
 #**************************************************************************************
 def day_card():
