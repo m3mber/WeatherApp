@@ -11,6 +11,10 @@ import xml.etree.ElementTree as ET
 from urllib.request import urlopen
 from BaseXClient import BaseXClient
 
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from app.forms import SignUpForm
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
