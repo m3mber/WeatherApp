@@ -121,13 +121,13 @@ def findCityId(city_name):
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     city_id = 0
     try:
-        city_name=unicodedata.normalize('NFD', city_name.lower())\
+        city_name_norm=unicodedata.normalize('NFD', city_name.lower())\
             .encode('ascii', 'ignore')\
             .decode("utf-8")
-        c_n=re.sub(r"[^\w\s]", '', city_name)
+        c_n=re.sub(r"[^\w\s]", '', city_name_norm)
         c_n=re.sub(r"\s+", '%20', c_n)
         url_city="http://servicos.cptec.inpe.br/XML/listaCidades?city="+c_n
-
+        city_name = city_name.lower()
         # create new database
         xml = urlopen(url_city).read().decode("iso-8859-1")
         session.create("cidades", str(xml))
