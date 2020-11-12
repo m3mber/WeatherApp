@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.urls import include
 
 urlpatterns = [
 	path('', views.index, name='index'),
@@ -24,4 +25,7 @@ urlpatterns = [
     path('forecast_city/', views.forecast_city, name='forecast_city'),
     path('day/', views.day_card, name='weathercard'),
     path('waves/', views.waves_card, name='ondulacao'),
+
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.signup, name='signup'),
 ]
