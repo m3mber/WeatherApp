@@ -5,7 +5,6 @@
 
 
         <xsl:for-each select="cidade/previsao[1]">
-            <!-- Imagem default -->
 
             <!-- ec	Encoberto com Chuvas Isoladas -->
             <xsl:if test="tempo = 'ec' ">
@@ -21,6 +20,7 @@
 
             <!-- c	Chuva -->
             <xsl:if test="tempo= 'c' ">
+                <h5 class="text-info">Chuva</h5>
                 <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
             </xsl:if>
 
@@ -170,8 +170,9 @@
             </xsl:if>
 
             <!-- npt	Nublado com Pancadas a Tarde -->
-            <h5 class="text-info">Nublado com chuva à tarde</h5>
+
             <xsl:if test="tempo= 'npt' ">
+                <h5 class="text-info">Nublado com chuva à tarde</h5>
                 <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
             </xsl:if>
 

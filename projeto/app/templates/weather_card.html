@@ -20,16 +20,43 @@
                             {{ forecast | safe}}
                         </div>
                     </div>
-                    <div class="card-body bg-white">
+                    <div class="card-body z-depth-2 bg-white">
                         <form class="user" action="{% url 'ondulacao' %}" method="post">
                             <div hidden class="form-group mx-sm-3 mb-2">
                                 <input hiddden type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" value="{{city_name}}">
                             </div>
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-info waves-effect btn-md">Ondulação: {{city_name}}</button>
+                            <button type="submit" class="btn btn-info waves-effect btn-md">Ondulação: {{city_name}}</button>
                         </form>
+                        {% if user.is_authenticated %}
+                            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#frameModalBottom">
+                                 Adicionar <b>{{city_name}}</b> aos favoritos
+                              </button>
+                        {% endif %}
                     </div>
                 </div>
+
+                <!-- Frame Modal Bottom -->
+                <div class="modal fade top" id="frameModalBottom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                  aria-hidden="true">
+
+                  <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
+                  <div class="modal-dialog modal-frame modal-top" role="document">
+
+
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <div class="row d-flex justify-content-center align-items-center">
+
+                          <p class="pt-3 pr-2">A cidade {{ city_name }} foi adicionada aos favoritos
+                          </p>
+                          <button type="button" class="btn btn-md btn-success" data-dismiss="modal">Confirmar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Frame Modal Bottom -->
             </div>
 
 

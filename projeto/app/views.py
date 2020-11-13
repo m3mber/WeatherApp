@@ -26,13 +26,13 @@ def forecast_city(request):
     
     if 'cityText' in request.POST:
         city_name=request.POST['cityText']
+        print(city_name)
         city_id= findCityId(city_name)
-
+        print(str(city_id))
         if city_id!=0:
             url_forecast = 'http://servicos.cptec.inpe.br/XML/cidade/7dias/'+str(city_id)+'/previsao.xml'
             with urlopen(url_forecast) as d:
                 xml_forecast = etree.parse(d)
-            #xml_forecast = urlopen(url_forecast)
 
             #Template da previsão dos 7 dias
             xslt_path = os.path.join(BASE_DIR, "app", "static","xml","previsao_7days.xsl")
@@ -136,25 +136,29 @@ def signup(request):
 ########################################################################################
 
 def findCityId(city_name):
-	# create session
+    # create session
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     city_id = 0
     try:
         city_name_norm=unicodedata.normalize('NFD', city_name.lower())\
             .encode('ascii', 'ignore')\
             .decode("utf-8")
-        c_n=re.sub(r"[^\w\s]", '', city_name_norm)
-        c_n=re.sub(r"\s+", '%20', c_n)
-        url_city="http://servicos.cptec.inpe.br/XML/listaCidades?city="+c_n
+
+        c_n = re.sub(r"[^\w\s]", '', city_name_norm)
+        c_n = re.sub(r"\s+", '%20', c_n)
+
+        url_city = "http://servicos.cptec.inpe.br/XML/listaCidades?city="+c_n
         city_name = city_name.lower()
+
         # create new database
         xml = urlopen(url_city).read().decode("iso-8859-1")
         session.create("cidades", str(xml))
 
         query = "let $cs := doc('cidades') for $c in $cs//cidade where lower-case($c/nome)='" + city_name + "' return $c/id/text()"
+
         queryResult = session.query(query)
         
-	    # loop through all results
+        # loop through all results
         for typecode, item in queryResult.iter():
             city_id = int(item)
 
@@ -212,3 +216,9 @@ def day_card():
 
     data_pt = " ".join(data)
     return data_pt
+
+
+#*********************************************************************
+def favoritos(request):
+
+    return render(request, 'favoritos.html')

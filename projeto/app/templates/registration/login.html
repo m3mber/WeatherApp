@@ -3,10 +3,22 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+
+
   <h2>Login</h2>
-  <form method="post">
+    <br>
+    <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn btn-info btn-block my-4"  type="submit">Login</button>
-  </form>
+    <button class="btn btn-outline-info btn-md"  type="submit">Login</button>
+    </form>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+
 {% endblock %}

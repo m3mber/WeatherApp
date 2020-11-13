@@ -40,19 +40,24 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'ondulacao' %}">Ondulação</a>
           </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'favoritos' %}">Cidades favoritas</a>
+              </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto nav-flex-icons">
         
           {% if user.is_authenticated %}
           
-          <button _ngcontent-serverapp-c147="" mdbbtn="" type="button" color="indigo" mdbwaveseffect="" class="waves-light btn-indigo btn waves-effect">Minha conta</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect">Minha conta</button>
          
-          <button _ngcontent-serverapp-c147="" mdbbtn="" type="button" color="light-blue" mdbwaveseffect="" class="waves-light btn-light-blue btn waves-effect" onclick="location.href='{% url 'logout' %}'">Logout</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'logout' %}'">Logout</button>
 
           {% else %}
 
-          <button _ngcontent-serverapp-c147="" mdbbtn="" type="button" color="light-blue" mdbwaveseffect="" class="waves-light btn-light-blue btn waves-effect" onclick="location.href='{% url 'login' %}'">Entrar</button>
-	  <button _ngcontent-serverapp-c147="" mdbbtn="" type="button" color="cyan" mdbwaveseffect="" class="waves-light btn-light-blue btn waves-effect" onclick="location.href='{% url 'signup' %}'">Criar conta</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'login' %}'">Entrar</button>
+	        <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'signup' %}'">Criar conta</button>
 
           {% endif %}
         </ul>
