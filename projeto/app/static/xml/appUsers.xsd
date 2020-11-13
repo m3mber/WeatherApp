@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element type="usersType" name="users" />
+  <xs:complexType name="comentarioType">
+  	<xs:attribute type="xs:string" name="data" use="required" />
+    <xs:attribute type="xs:integer" name="cidade" use="required" />
+  </xs:complexType>
   <xs:complexType name="cidadeType">
   	<xs:sequence>
-  	  <xs:element type="xs:number" name="id"/>
-      <xs:element type="xs:string" name="nome"/>
-    <xs:sequence>
+  	  <xs:element type="xs:string" name="id" />
+      <xs:element type="xs:string" name="nome" />
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="userType">
-  	<xs:sequence>
-  	  <xs:element type="xs:string" name="mail"/>
-      <xs:element type="cidadeType" name="cidade" minOccurs="0"/>
-      <xs:element type="xs:string" name="cometario">
-      	<xs:attribute name="date" type="xs:string" use="required"/>
-      </xs:element>
     <xs:sequence>
+      <xs:element type="xs:string" name="mail" />
+      <xs:element type="cidadeType" name="cidade" minOccurs="0" />
+      <xs:element type="comentarioType" name="comentario" minOccurs="0" />
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="usersType">
     <xs:sequence>
-      <xs:element type="userType" name="user"/>
+      <xs:element type="userType" name="user" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="users" type="usersType"/>
 </xs:schema>
