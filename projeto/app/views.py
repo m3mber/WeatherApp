@@ -187,10 +187,20 @@ def signup(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-            input = "let $us := doc('users') for $u in $us/users/user[last()] return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
-            query = session.query(input)
-            query.execute()
-            query.close()
+            file_schema = open(os.path.join(BASE_DIR, "app", "static","xml","validUser.xsd"),'r')
+            input = "let $doc := <user>  <mail>" +user.email +"</mail> </user> let $schema :=" + file_schema.read() + " return validate:xsd($doc, $schema)"
+            query1 = session.query(input)
+            try:
+                query1.execute()
+                query1.close()
+                input2 = "let $us := doc('users') for $u in $us/users/user[last()] return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
+                query2 = session.query(input2)
+                query2.execute()
+                query2.close()
+            except:
+                query1.close()
+                alert="Email inválido"
+                return render(request, 'erro.html', {"erro":alert})
             session.close()
             return redirect('index')
     else:
