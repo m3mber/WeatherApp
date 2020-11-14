@@ -32,5 +32,76 @@
 			  </div>
 			</div>
 
+			</br></br>
+			<div class="card" style="width: 65rem">
+				<!-- Tabs navs -->
+				<ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+				  <li class="nav-item" role="presentation">
+				    <a
+				      class="nav-link active"
+				      id="ex1-tab-1"
+				      data-toggle="tab"
+				      href="#ex1-tabs-1"
+				      role="tab"
+				      aria-controls="ex1-tabs-1"
+				      aria-selected="true"
+				      > Comentários </a
+				    >
+				  </li>
+				  <li class="nav-item" role="presentation">
+				    <a
+				      class="nav-link"
+				      id="ex1-tab-2"
+				      data-toggle="tab"
+				      href="#ex1-tabs-2"
+				      role="tab"
+				      aria-controls="ex1-tabs-2"
+				      aria-selected="false"
+				      > Adicionar Comentário </a
+				    >
+				  </li>
+				</ul>
+				<!-- Tabs navs -->
+
+				<!-- Tabs content -->
+				<div class="tab-content" id="ex1-content">
+				  <div
+				    class="tab-pane fade show active"
+				    id="ex1-tabs-1"
+				    role="tabpanel"
+				    aria-labelledby="ex1-tab-1"
+				  >
+				  {% for coment, date, name in coments %}
+					  <div class="card border border-dark mb-3" style="max-width: 64rem">
+						  <div class="card-header text-left">{{name}}</div>
+						  <div class="card-body text-dark">
+						    <p class="card-text text-left">
+						      {{coment}}
+						    </p>
+						  </div>
+						  <div class="card-footer bg-transparent text-left font-weight-lighter font-italic small">{{date}}</div>
+					  </div>
+				  {% endfor %}
+				  </div>
+
+				  <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+				  	<form class="user" action="{% url 'addComent' %}" method="post">
+                        <div hidden class="form-group mx-sm-3 mb-2">
+                            <input hiddden type="text" name="cityText" class="form-control form-control-user" id="cityn" value="{{city_name}}">
+                        </div>
+                        <div hidden class="form-group mx-sm-3 mb-2">
+                            <input hiddden type="text" name="cityid" class="form-control form-control-user" id="city_id" value="{{city_id}}">
+                        </div>
+                        {% csrf_token %}
+                        <div class="form-outline" style="max-width: 64rem">
+						  <textarea name="coment"class="form-control" id="textAreaExample" rows="4" placeholder="Inserir comentário aqui..."></textarea>
+						</div>
+						<button type="submit" class="btn btn-outline-info waves-effect btn-md">Adicionar Comentário</button>
+                    </form>
+				  </div>
+				</div>
+				</br>
+			</div>
+			   
 			</br></br></br>
         {% endblock %}

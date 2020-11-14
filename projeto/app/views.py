@@ -14,6 +14,9 @@ from BaseXClient import BaseXClient
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from app.forms import SignUpForm
+from django.contrib.auth import get_user_model
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 # Create your views here.
 def index(request):
@@ -69,10 +72,13 @@ def forecast_city(request):
 #*********************************************************************************************
 def waves_card(request):
     
-    if 'cityText' in request.POST:
-        city_name=request.POST['cityText']
-        city_id= findCityId(city_name)
-
+    if 'cityText' in request.POST or 'name' in request.GET:
+        if 'cityText' in request.POST:
+            city_name=request.POST['cityText']
+            city_id= findCityId(city_name)
+        else:
+            city_name=request.GET['name']
+            city_id= findCityId(city_name)
         if city_id!=0:
             url_ondas = 'http://servicos.cptec.inpe.br/XML/cidade/' + str(city_id) +'/dia/0/ondas.xml'
             with urlopen(url_ondas) as d:
@@ -97,11 +103,45 @@ def waves_card(request):
                 transform = etree.XSLT(xslt_file)
                 image_template = transform(xml_ondas)
 
+                xml = etree.parse(os.path.join(BASE_DIR, 'app/static/xml/users.xml'))
+                xsd = os.path.join(BASE_DIR, 'app/static/xml/appUsers.xsd')
+
+                session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+                query = "let $us := doc('users') for $u in $us//user where lower-case($u/comentario/@cidade)='" + str(city_id) + "' return ($u/comentario/text(), data($u/comentario/@data), $u/mail/text())"
+
+                queryResult = session.query(query)
+                coments = []
+                data = []
+                i=0
+                # loop through all results
+                for typecode, item in queryResult.iter():
+                    data += [item]
+                temp = []
+                count = 0
+                for i in data:
+                	temp += [i]
+                	if count == 2:
+                		count= 0
+                		coments += [temp]
+                	else:
+                		count+=1
+                
+                for c in coments:
+                	User  = get_user_model()
+                	users = User.objects.all()
+                	for u in users:
+                		if u.email == c[2]:
+                			c[2] = u.username
+
+                # close query object
+                queryResult.close()
                 context = {
                     'city_name': city_name,
                     'forecast': ondas_template,
                     'image': image_template,
                     'day': day_card(),
+                    'coments': coments,
+                    'city_id': city_id,
                 }
         else:
             context = {
@@ -115,8 +155,12 @@ def waves_card(request):
         }
 
     return render(request, 'ondulacao.html', context)
-#*********************************************************************************************
 
+#*********************************************************************************************
+def addComent(request):
+    return HttpResponseRedirect(reverse('ondulacao') + '?name=' + request.POST['cityText'])
+
+#*********************************************************************************************
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -222,3 +266,12 @@ def day_card():
 def favoritos(request):
 
     return render(request, 'favoritos.html')
+
+#*********************************************************************
+def is_xml_valid(xml, xsd):
+    # Load XSD file
+    xsd_root = etree.parse(xsd)
+    xsd = etree.XMLSchema(xsd_root)
+
+    # Validate XML file
+    return xsd.validate(xml)

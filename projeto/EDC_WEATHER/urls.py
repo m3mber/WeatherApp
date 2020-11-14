@@ -26,6 +26,7 @@ urlpatterns = [
     path('day/', views.day_card, name='weathercard'),
     path('waves/', views.waves_card, name='ondulacao'),
     path('favoritos/', views.favoritos, name='favoritos'),
+    path('addComent/', views.addComent, name='addComent'),
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.signup, name='signup'),
