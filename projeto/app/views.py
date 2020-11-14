@@ -107,7 +107,7 @@ def waves_card(request):
                 xsd = os.path.join(BASE_DIR, 'app/static/xml/appUsers.xsd')
 
                 session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-                query = "let $us := doc('users') for $u in $us//user where lower-case($u/comentario/@cidade)='" + str(city_id) + "' return ($u/comentario/text(), data($u/comentario/@data), $u/mail/text())"
+                query = "let $us := doc('users') for $u in $us//user let $cs := $u/comentario for $c in $cs where $c[@cidade = " + str(city_id) + "] return ($c/text(), data($c/@data), $u/mail/text())"
 
                 queryResult = session.query(query)
                 coments = []
@@ -123,6 +123,7 @@ def waves_card(request):
                 	if count == 2:
                 		count= 0
                 		coments += [temp]
+                		temp = []
                 	else:
                 		count+=1
                 
@@ -135,6 +136,8 @@ def waves_card(request):
 
                 # close query object
                 queryResult.close()
+                session.close()
+
                 context = {
                     'city_name': city_name,
                     'forecast': ondas_template,
@@ -158,7 +161,22 @@ def waves_card(request):
 
 #*********************************************************************************************
 def addComent(request):
-    return HttpResponseRedirect(reverse('ondulacao') + '?name=' + request.POST['cityText'])
+    name = request.POST['cityText']
+    city_id = request.POST['cityid']
+    coment = request.POST['coment']
+    today = date.today()
+    data = "" + str(today.day) + "/" + str(today.month) + "/" + str(today.year)
+
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+    query = "let $us := doc('users') for $u in $us//user where lower-case($u/mail) = '" + request.user.email + "' return insert nodes (<comentario data=\"" + data + "\" cidade=\""+ city_id + "\">" + coment + "</comentario>) as last into $u"
+    
+    queryResult = session.query(query)
+    queryResult.execute()
+    queryResult.close()
+
+    session.close()
+
+    return HttpResponseRedirect(reverse('ondulacao') + '?name=' + name)
 
 #*********************************************************************************************
 def signup(request):
