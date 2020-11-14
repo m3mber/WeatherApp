@@ -187,7 +187,7 @@ def signup(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-            input = "let $us := doc('users') for $u in $us/users/user return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
+            input = "let $us := doc('users') for $u in $us/users/user[last()] return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
             query = session.query(input)
             query.execute()
             query.close()
