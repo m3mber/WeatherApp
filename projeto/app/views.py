@@ -186,10 +186,29 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+            input = "let $us := doc('users') for $u in $us/users/user return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
+            query = session.query(input)
+            query.execute()
+            query.close()
+            session.close()
             return redirect('index')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+#*********************************************************************************************
+
+def myaccount(request):
+    context={
+        'text':"ola"
+    }
+    return render(request, 'myaccount.html', context) 
+
+#*********************************************************************************************
+
+def favoritos(request):
+
+    return render(request, 'favoritos.html')  
 
 ########################################################################################
 # Funções Auxiliares
@@ -245,9 +264,7 @@ def day_card():
 
 
 #*********************************************************************
-def favoritos(request):
 
-    return render(request, 'favoritos.html')
 
 #*********************************************************************
 def is_xml_valid(xml, xsd):

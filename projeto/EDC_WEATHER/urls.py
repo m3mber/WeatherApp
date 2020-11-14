@@ -30,4 +30,5 @@ urlpatterns = [
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.signup, name='signup'),
+    path('myaccount/', views.myaccount, name='conta'),
 ]

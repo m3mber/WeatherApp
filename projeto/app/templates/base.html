@@ -50,7 +50,7 @@
         
           {% if user.is_authenticated %}
           
-            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect">Minha conta</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'conta' %}'">Minha conta</button>
          
             <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'logout' %}'">Logout</button>
 

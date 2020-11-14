@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+        {% block content %}
+
+        
+        <div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Cidades favoritas</h3>
+  <div class="card-body">
+    <div id="table" class="table-editable">
+      
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <thead>
+          <tr>
+            <th class="text-center">Cidade</th>
+            <th class="text-center">Remover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td class="pt-3-half" contenteditable="true">Natal</td>
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+
+          </tr>
+          <!-- This is our clonable table line -->
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+        {% endblock %}
