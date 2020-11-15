@@ -18,9 +18,6 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-#global variable
-now_weather = []
-
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -29,10 +26,14 @@ def index(request):
 #********************* 7 DAY WEATHER WIDGET ********************************
 #*****************************************************************************
 def forecast_city(request):
-    
-    if 'cityText' in request.POST:
-        city_name=request.POST['cityText']
-        city_id= findCityId(city_name)
+    if 'cityText' in request.POST or 'name' in request.GET:
+        if 'cityText' in request.POST:
+            city_name=request.POST['cityText']
+            city_id= findCityId(city_name)
+        else:
+            city_name = request.GET['name']
+            city_id = findCityId(city_name)
+        
         if city_id!=0:
             url_forecast = 'http://servicos.cptec.inpe.br/XML/cidade/7dias/'+str(city_id)+'/previsao.xml'
             with urlopen(url_forecast) as d:
@@ -233,7 +234,6 @@ def myaccount(request):
 #*********************************************************************************************
 def favoritos(request):
     favorite = favorite_cities_info(request.user.email)
-    print(favorite)
 
     return render(request, 'favoritos.html', {'favorite' : favorite })
 
@@ -338,8 +338,6 @@ def favorite_cities_info(email):
             #Dicionário da cidade: key=(nome da cidade) values=(são os dados do dia de hoje)
             favorite[key] = [current_weather, max_temp, min_temp, sea_state]
 
-        #Teste
-        favorite['Funchal (Teste)'] = ['10','10', '10', '10']
 
     # Fechar sessão
     finally:
@@ -350,4 +348,18 @@ def favorite_cities_info(email):
 
 #*************************************************************************************
 def add_favorite_citie(request):
-    return
+    name = request.POST['cityText']
+    city_id = request.POST['cityid']
+
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+name+"</nome> } </cidade> after $u"
+
+
+    queryResult = session.query(query)
+    queryResult.execute()
+    queryResult.close()
+
+    session.close()
+
+    return HttpResponseRedirect(reverse('forecast_city') +'?name=' + name)
