@@ -22,8 +22,8 @@
   </xs:complexType>
   <xs:complexType name="cidadeType">
   	<xs:sequence>
-  	  <xs:element type="xs:string" name="id" />
-      	  <xs:element type="xs:string" name="nome" />
+  	  <xs:element type="xs:integer" name="id" />
+      <xs:element type="xs:string" name="nome" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

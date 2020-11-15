@@ -105,9 +105,6 @@ def waves_card(request):
                 transform = etree.XSLT(xslt_file)
                 image_template = transform(xml_ondas)
 
-                xml = etree.parse(os.path.join(BASE_DIR, 'app/static/xml/users.xml'))
-                xsd = os.path.join(BASE_DIR, 'app/static/xml/appUsers.xsd')
-
                 session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
                 query = "let $us := doc('users') for $u in $us//user let $cs := $u/comentarios/comentario for $c in $cs where $c[@cidade = " + str(city_id) + "] return ($c/text(), data($c/@data), $u/mail/text())"
 
@@ -170,11 +167,26 @@ def addComent(request):
     data = "" + str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-    query = "let $us := doc('users') for $u in $us//user where lower-case($u/mail) = '" + request.user.email + "' return insert nodes (<comentario data=\"" + data + "\" cidade=\""+ city_id + "\">" + coment + "</comentario>) as last into $u"
-    
-    queryResult = session.query(query)
-    queryResult.execute()
-    queryResult.close()
+    file_schema = open(os.path.join(BASE_DIR, "app", "static","xml","validComent.xsd"),'r')
+    input = "let $doc := <comentario data=\"" + data + "\" cidade=\""+ city_id + "\">" + coment + "</comentario> let $schema :=" + file_schema.read() + " return validate:xsd($doc, $schema)"
+    query1 = session.query(input)
+    try:
+        query1.execute()
+        query1.close()
+    except Exception as e:
+        query1.close()
+        alert="ERRO: Comentário inválido!"
+        return render(request, 'erro.html', {"erro":alert})
+
+    query = "let $us := doc('users') for $u in $us//user where lower-case($u/mail) = '" + request.user.email + "' return insert nodes (<comentario data=\"" + data + "\" cidade=\""+ city_id + "\">" + coment + "</comentario>) as last into $u/comentarios"
+    try:
+        queryResult = session.query(query)
+        queryResult.execute()
+        queryResult.close()
+    except:
+        queryResult.close()
+        alert="ERRO: Erro ao guardar comentário!"
+        return render(request, 'erro.html', {"erro":alert})
 
     session.close()
 
