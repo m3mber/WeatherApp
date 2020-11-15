@@ -18,6 +18,9 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+#global variable
+now_weather = []
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -47,6 +50,7 @@ def forecast_city(request):
             transform = etree.XSLT(xslt_file)
             image_template = transform(xml_forecast)
             data_pt = day_card()
+
 
             context = {
                 'city_name':city_name,
@@ -206,8 +210,8 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
-#*********************************************************************************************
 
+#*********************************************************************************************
 def myaccount(request):
     context={
         'text':"ola"
@@ -215,14 +219,19 @@ def myaccount(request):
     return render(request, 'myaccount.html', context) 
 
 #*********************************************************************************************
-
 def favoritos(request):
+    favorite = favorite_cities_info(request.user.email)
+    print(favorite)
 
-    return render(request, 'favoritos.html')  
+    return render(request, 'favoritos.html', {'favorite' : favorite })
 
-########################################################################################
-# Funções Auxiliares
-########################################################################################
+
+
+#*********************
+# Funções Auxiliares #
+#*********************
+
+
 
 def findCityId(city_name):
     
@@ -251,7 +260,6 @@ def findCityId(city_name):
             city_id = c.find('id').text
 
     return city_id
-    
 
 #**************************************************************************************
 def day_card():
@@ -270,13 +278,11 @@ def day_card():
             data[1] = 'de Dezembro'
 
     data_pt = " ".join(data)
+
+
     return data_pt
 
-
-#*********************************************************************
-
-
-#*********************************************************************
+#*************************************************************************************
 def is_xml_valid(xml, xsd):
     # Load XSD file
     xsd_root = etree.parse(xsd)
@@ -284,3 +290,52 @@ def is_xml_valid(xml, xsd):
 
     # Validate XML file
     return xsd.validate(xml)
+
+#*************************************************************************************
+def favorite_cities_info(email):
+    favorite = dict()
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    if not session:
+        print("ERRO: impossivel criar sessão no BaseXServer ")
+
+    #Buscar as cidades favoritas de um determinado utilizador
+    try:
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt'  return data($u/cidade/nome)"
+        queryResult = session.query(query)
+
+        #Adicionar ao dicionário das cidades favoritas
+        for typecode, city_name in queryResult.iter():
+            key = city_name
+            id = findCityId(city_name)
+            print(id)
+            url_city = "http://servicos.cptec.inpe.br/XML/cidade/7dias/"+ id +"/previsao.xml"
+            f = urlopen(url_city).read()
+            xml_city = etree.fromstring(f)
+
+            #Buscar primeira previsão
+            query = "/cidade/previsao[1]"
+            citie = xml_city.xpath(query)
+
+            for c in citie:
+                current_weather = c.find('iuv').text
+                max_temp = c.find('maxima').text
+                min_temp = c.find('minima').text
+                sea_state = None
+
+            #Dicionário da cidade: key=(nome da cidade) values=(são os dados do dia de hoje)
+            favorite[key] = [current_weather, max_temp, min_temp, sea_state]
+
+        #Teste
+        favorite['Funchal (Teste)'] = ['10','10', '10', '10']
+
+    # Fechar sessão
+    finally:
+        if session:
+            session.close()
+
+    return favorite
+
+#*************************************************************************************
+def add_favorite_citie(request):
+    return
