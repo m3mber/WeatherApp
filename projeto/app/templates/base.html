@@ -46,16 +46,16 @@
           
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link"> {{user.username}} | </a>
+                <a class="nav-link">{{user.username}} | </a>
               </li>
             </ul>
          
-            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'logout' %}'">Logout</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-sm waves-effect" onclick="location.href='{% url 'logout' %}'">Logout</button>
 
           {% else %}
 
-            <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'login' %}'">Entrar</button>
-	        <button  type="button"  class="waves-light btn-outline-light btn btn-md waves-effect" onclick="location.href='{% url 'signup' %}'">Criar conta</button>
+            <button  type="button"  class="waves-light btn-outline-light btn btn-sm waves-effect" onclick="location.href='{% url 'login' %}'">Entrar</button>
+	        <button  type="button"  class="waves-light btn-outline-light btn btn-sm waves-effect" onclick="location.href='{% url 'signup' %}'">Criar conta</button>
 
           {% endif %}
         </ul>

@@ -38,9 +38,9 @@
                         </form>
                     </td>
                     <td>
-                        <form class="user" action="" method="post">
+                        <form class="user" action="{% url 'remove_city' %}" method="post">
                             <div class="form-group mx-sm-3 mb-2">
-                                <input hidden type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" value="{{city_name}}" />
+                                <input hidden type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" value="{{key}}" />
                             </div>
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger waves-effect btn-md">Remover </button>

@@ -273,7 +273,7 @@ def findCityId(city_name):
 
     return city_id
 
-#**************************************************************************************
+#*************************************************************************************
 def day_card():
     today = date.today()
     d2 = today.strftime("%d %B")
@@ -320,7 +320,6 @@ def favorite_cities_info(email):
         for typecode, city_name in queryResult.iter():
             key = city_name
             id = findCityId(city_name)
-            print(id)
             url_city = "http://servicos.cptec.inpe.br/XML/cidade/7dias/"+ id +"/previsao.xml"
             f = urlopen(url_city).read()
             xml_city = etree.fromstring(f)
@@ -352,14 +351,35 @@ def add_favorite_citie(request):
     city_id = request.POST['cityid']
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+    try:
+        query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+name+"</nome> } </cidade> after $u"
 
-    query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+name+"</nome> } </cidade> after $u"
-
-
-    queryResult = session.query(query)
-    queryResult.execute()
-    queryResult.close()
-
-    session.close()
+        queryResult = session.query(query)
+        queryResult.execute()
+        queryResult.close()
+    finally:
+        if session:
+            session.close()
 
     return HttpResponseRedirect(reverse('forecast_city') +'?name=' + name)
+
+#**************************************************************************************
+def remove_favorite_cities(request):
+    name = request.POST['cityText']
+
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+    if not session:
+        print("ERRO: impossivel criar sessão no BaseXServer ")
+
+    try:
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt' let $xs := doc('users')//cidade for $x in $xs where $x/nome = '"+name+"' return delete node $x"
+
+        queryResult = session.query(query)
+        queryResult.execute()
+        queryResult.close()
+    finally:
+        if session:
+            session.close()
+
+
+    return HttpResponseRedirect(reverse('favoritos') +'?name=' + name)
