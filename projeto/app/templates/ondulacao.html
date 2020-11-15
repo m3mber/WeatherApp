@@ -48,6 +48,7 @@
 				      > Comentários </a
 				    >
 				  </li>
+				  {% if forecast and user.is_authenticated %}
 				  <li class="nav-item" role="presentation">
 				    <a
 				      class="nav-link"
@@ -60,6 +61,7 @@
 				      > Adicionar Comentário </a
 				    >
 				  </li>
+				  {% endif %}
 				</ul>
 				<!-- Tabs navs -->
 
@@ -83,7 +85,7 @@
 					  </div>
 				  {% endfor %}
 				  </div>
-
+				  {% if forecast and user.is_authenticated %}
 				  <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
 				  	<form class="user" action="{% url 'addComent' %}" method="post">
                         <div hidden class="form-group mx-sm-3 mb-2">
@@ -99,6 +101,7 @@
 						<button type="submit" class="btn btn-outline-info waves-effect btn-md">Adicionar Comentário</button>
                     </form>
 				  </div>
+				  {% endif %}
 				</div>
 				</br>
 			</div>
