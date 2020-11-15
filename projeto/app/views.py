@@ -17,10 +17,29 @@ from app.forms import SignUpForm
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+import feedparser
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    feed = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/241/previsao.xml')
+    description=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
+    feed2 = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/244/previsao.xml')
+    description2=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
+    feed3 = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/224/previsao.xml')
+    description3=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
+    context={
+        "title":feed.entries[0].title,
+        "image":description[0],
+        "weather":description[1],
+
+        "title2":feed2.entries[0].title,
+        "image2":description2[0],
+        "weather2":description2[1],
+
+        "title3":feed3.entries[0].title,
+        "image3":description3[0],
+        "weather3":description3[1],
+    }
+    return render(request, 'index.html', context)
 
 
 #********************* 7 DAY WEATHER WIDGET ********************************
