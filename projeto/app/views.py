@@ -109,7 +109,7 @@ def waves_card(request):
                 xsd = os.path.join(BASE_DIR, 'app/static/xml/appUsers.xsd')
 
                 session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-                query = "let $us := doc('users') for $u in $us//user let $cs := $u/comentario for $c in $cs where $c[@cidade = " + str(city_id) + "] return ($c/text(), data($c/@data), $u/mail/text())"
+                query = "let $us := doc('users') for $u in $us//user let $cs := $u/comentarios/comentario for $c in $cs where $c[@cidade = " + str(city_id) + "] return ($c/text(), data($c/@data), $u/mail/text())"
 
                 queryResult = session.query(query)
                 coments = []
@@ -301,7 +301,7 @@ def favorite_cities_info(email):
 
     #Buscar as cidades favoritas de um determinado utilizador
     try:
-        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt'  return data($u/cidade/nome)"
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt'  return data($u/cidades/cidade/nome)"
         queryResult = session.query(query)
 
         #Adicionar ao dicionário das cidades favoritas

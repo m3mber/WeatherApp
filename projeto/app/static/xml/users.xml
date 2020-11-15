@@ -2,11 +2,14 @@
 <users>
   <user>
 	<mail>rodrigo.l.silva.santos@ua.pt</mail>
-	<cidade>
-	  <id>241</id>
-	  <nome>rio de janeiro</nome>
-	</cidade>
-
-	<comentario data="13/11/2020" cidade="241">OMG, mesmo!!! O mar estava espetacular hoje! Diria mesmo do caralho, nem havia tubarões! OMG!</comentario>
+	<cidades>
+		<cidade>
+		  <id>241</id>
+		  <nome>rio de janeiro</nome>
+		</cidade>
+	</cidades>
+	<comentarios>
+		<comentario data="13/11/2020" cidade="241">OMG, mesmo!!! O mar estava espetacular hoje! Diria mesmo do caralho, nem havia tubarões! OMG!</comentario>
+	</comentarios>
   </user>
 </users>
