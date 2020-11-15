@@ -5,7 +5,7 @@
 			  {% if image %}
 			  <div class="weather-part-second-image">
 				  {{ image | safe }}
-				  <div class="badge badge-primary weather-part-second-image-label pl-3 pr-3 pt-2 rounded-0">
+				  <div class="badge badge-primary indigo darken-4 weather-part-second-image-label pl-3 pr-3 pt-2 rounded-0">
 	                    <p>{{ day }}</p>
 	              </div>
 	          </div>
@@ -27,7 +27,8 @@
                         <input hiddden type="text" name="cityText" class="form-control form-control-user" id="city" aria-describedby="heightHelp" value="{{city_name}}">
                     </div>
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-info waves-effect btn-md">Meteorologia: {{city_name}}</button>
+                    <hr class="grey darken-2">
+                    <button type="submit" class="btn btn-indigo darken-4 waves-effect btn-md">Meteorologia: <b>{{city_name}}</b></button>
                 </form>
 			  </div>
 			</div>
