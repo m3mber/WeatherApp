@@ -201,9 +201,9 @@ def signup(request):
                 query2 = session.query(input2)
                 query2.execute()
                 query2.close()
-            except:
+            except Exception as e:
                 query1.close()
-                alert="Email inválido"
+                alert=e
                 return render(request, 'erro.html', {"erro":alert})
             session.close()
             return redirect('index')
