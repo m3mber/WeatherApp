@@ -356,7 +356,6 @@ def favorite_cities_info(email):
             #Dicionário da cidade: key=(nome da cidade) values=(são os dados do dia de hoje)
             favorite[key] = [current_weather, max_temp, min_temp, sea_state]
 
-
     # Fechar sessão
     finally:
         if session:
@@ -372,7 +371,6 @@ def add_favorite_citie(request):
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     try:
         query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+name+"</nome> } </cidade> after $u"
-
         queryResult = session.query(query)
         queryResult.execute()
         queryResult.close()
@@ -388,17 +386,16 @@ def remove_favorite_cities(request):
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer ")
+        print("ERRO: impossivel criar sessão no BaseXServer!")
 
     try:
         query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt' let $xs := doc('users')//cidade for $x in $xs where $x/nome = '"+name+"' return delete node $x"
-
         queryResult = session.query(query)
         queryResult.execute()
         queryResult.close()
+
     finally:
         if session:
             session.close()
-
 
     return HttpResponseRedirect(reverse('favoritos') +'?name=' + name)

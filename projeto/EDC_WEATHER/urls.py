@@ -33,5 +33,4 @@ urlpatterns = [
     path('myaccount/', views.myaccount, name='conta'),
     path('add_favorite/', views.add_favorite_citie, name='add_favorite'),
     path('remove_city/', views.remove_favorite_cities, name='remove_city')
-
 ]
