@@ -11,7 +11,7 @@
                     <li class="list-group-item">Vento: <xsl:value-of select="vento"/> km/h</li>
                     <li class="list-group-item">Direção Vento: <xsl:value-of select="vento_dir"/></li-->
                     <p></p>
-                    <h5><b>Altura: <xsl:value-of select="altura"/> m</h5>
+                    <h5>Altura: <xsl:value-of select="altura"/> m</h5>
                     <h5>Agitação: <xsl:value-of select="agitacao"/></h5>
                     <h5>Direção Ondas: <xsl:value-of select="direcao"/></h5>
                     <h5>Vento: <xsl:value-of select="vento"/> km/h</h5>
