@@ -71,15 +71,23 @@ def forecast_city(request):
             image_template = transform(xml_forecast)
             data_pt = day_card()
 
-            city_on_bd = verify_if_city_bd(request.user.email, city_name)
+            if request.user.is_authenticated:
+                city_on_bd = verify_if_city_bd(request.user.email, city_name)
 
-            context = {
-                'city_name':city_name,
-                'forecast':forecast_template,
-                'image': image_template,
-                'day': data_pt,
-                'city_bd' : str(city_on_bd)
-            }
+                context = {
+                    'city_name':city_name,
+                    'forecast':forecast_template,
+                    'image': image_template,
+                    'day': data_pt,
+                    'city_bd' : str(city_on_bd)
+                }
+            else:
+                context = {
+                    'city_name':city_name,
+                    'forecast':forecast_template,
+                    'image': image_template,
+                    'day': data_pt,
+                }
 
         else:
             context = {
@@ -415,7 +423,7 @@ def remove_favorite_cities(request):
         print("ERRO: impossivel criar sessão no BaseXServer!")
 
     try:
-        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt' let $xs := doc('users')//cidade for $x in $xs where $x/nome = '"+name+"' return delete node $x"
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = '"+ request.user.email+ "' let $xs := $u//cidade for $x in $xs where $x/id = '"+findCityId(name)+"' return delete node $x"
         queryResult = session.query(query)
         queryResult.execute()
         queryResult.close()
