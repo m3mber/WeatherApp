@@ -71,12 +71,14 @@ def forecast_city(request):
             image_template = transform(xml_forecast)
             data_pt = day_card()
 
+            city_on_bd = verify_if_city_bd(request.user.email, city_name)
 
             context = {
                 'city_name':city_name,
                 'forecast':forecast_template,
                 'image': image_template,
                 'day': data_pt,
+                'city_bd' : str(city_on_bd)
             }
 
         else:
@@ -332,7 +334,7 @@ def favorite_cities_info(email):
 
     #Buscar as cidades favoritas de um determinado utilizador
     try:
-        query = "let $us := doc('users') for $u in $us//user where $u/mail = 'rodrigo.l.silva.santos@ua.pt'  return data($u/cidades/cidade/nome)"
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = '"+email+"'  return data($u/cidades/cidade/nome)"
         queryResult = session.query(query)
 
         #Adicionar ao dicionário das cidades favoritas
@@ -343,7 +345,7 @@ def favorite_cities_info(email):
             f = urlopen(url_city).read()
             xml_city = etree.fromstring(f)
 
-            #Buscar primeira previsão
+            #Buscar primeira previsão do tempo
             query = "/cidade/previsao[1]"
             citie = xml_city.xpath(query)
 
@@ -351,7 +353,18 @@ def favorite_cities_info(email):
                 current_weather = c.find('iuv').text
                 max_temp = c.find('maxima').text
                 min_temp = c.find('minima').text
-                sea_state = None
+
+            url_city_ondas = "http://servicos.cptec.inpe.br/XML/cidade/" + id + "/todos/tempos/ondas.xml"
+            file = urlopen(url_city_ondas).read()
+            xml_city_wave = etree.fromstring(file)
+
+            # Buscar as condições de mar
+            query1 = "/cidade/previsao[1]"
+            waves = xml_city_wave.xpath(query1)
+
+            for w in waves:
+                sea_state = w.find('agitacao').text
+
 
             #Dicionário da cidade: key=(nome da cidade) values=(são os dados do dia de hoje)
             favorite[key] = [current_weather, max_temp, min_temp, sea_state]
@@ -365,12 +378,25 @@ def favorite_cities_info(email):
 
 #*************************************************************************************
 def add_favorite_citie(request):
-    name = request.POST['cityText']
+    city_name = request.POST['cityText']
     city_id = request.POST['cityid']
+    bd_cities_empty = verify_empty_cities_bd(request.user.email)
+
+
+    if bd_cities_empty is None:
+        print("ERRO: algo aconteceu na verificação da base de dados")
+
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+    if not session:
+        print("ERRO: impossivel criar sessão no BaseXServer ")
+
     try:
-        query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+name+"</nome> } </cidade> after $u"
+        if bd_cities_empty:
+            query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidades>{<cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade>}</cidades> after $x/mail"
+        else:
+            query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+city_name+"</nome> } </cidade> after $u"
+
         queryResult = session.query(query)
         queryResult.execute()
         queryResult.close()
@@ -378,9 +404,9 @@ def add_favorite_citie(request):
         if session:
             session.close()
 
-    return HttpResponseRedirect(reverse('forecast_city') +'?name=' + name)
+    return HttpResponseRedirect(reverse('forecast_city') +'?name=' + city_name)
 
-#**************************************************************************************
+#*************************************************************************************
 def remove_favorite_cities(request):
     name = request.POST['cityText']
 
@@ -399,3 +425,59 @@ def remove_favorite_cities(request):
             session.close()
 
     return HttpResponseRedirect(reverse('favoritos') +'?name=' + name)
+
+#*************************************************************************************
+def verify_empty_cities_bd(email):
+    check = 0
+    bd_empty = None
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    if not session:
+        print("ERRO: impossivel criar sessão no BaseXServer ")
+
+    try:
+        query = "let $us := doc('users') for $u in $us//user where lower-case($u/mail) = '"+email+"' for $c in $u return $c/cidades"
+        queryResult = session.query(query)
+
+
+        for type, item in queryResult.iter():
+            check += 1
+
+        if check > 3: #Ter a certeza que está mesmo vazia
+            bd_empty = False
+        else:
+            bd_empty = True
+
+        queryResult.execute()
+        queryResult.close()
+
+    finally:
+        if session:
+            session.close()
+
+    return bd_empty
+
+#*************************************************************************************
+def verify_if_city_bd(email,city_name):
+    city_bd = False
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    if not session:
+        print("ERRO: impossivel criar sessão no BaseXServer ")
+
+    try:
+        query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+email+"' for $c in $x//cidade where $c/nome = '"+city_name+"' return data($c/nome)"
+        queryResult = session.query(query)
+
+        for type, item in queryResult.iter():
+            city_bd = True
+
+        queryResult.execute()
+        queryResult.close()
+
+    finally:
+        if session:
+            session.close()
+
+    return city_bd
+

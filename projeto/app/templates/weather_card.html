@@ -29,17 +29,29 @@
                             <button type="submit" class="btn btn-indigo darken-4 waves-effect btn-md">Ondulação: {{city_name}}</button>
                         </form>
                         {% if user.is_authenticated %}
-
-                            <form class="user" action="{% url 'add_favorite' %}" method="post">
-                                <div hidden class="form-group mx-sm-3 mb-2">
-                                    <input hiddden type="text" name="cityText" class="form-control form-control-user" id="cityn" value="{{city_name}}">
-                                </div>
-                                <div hidden class="form-group mx-sm-3 mb-2">
-                                    <input hiddden type="text" name="cityid" class="form-control form-control-user" id="city_id" value="{{city_id}}">
-                                </div>
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success waves-effect btn-md">Adicionar <b>{{ city_name }}</b> aos favoritos</button>
-                            </form>
+                            {% if city_bd == "True" %}
+                                <form class="user" action="" method="post">
+                                    <div hidden class="form-group mx-sm-3 mb-2">
+                                        <input hiddden type="text" name="cityText" class="form-control form-control-user" id="cityn" value="{{city_name}}">
+                                    </div>
+                                    <div hidden class="form-group mx-sm-3 mb-2">
+                                        <input hiddden type="text" name="cityid" class="form-control form-control-user" id="city_id" value="{{city_id}}">
+                                    </div>
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success waves-effect btn-md" data-toggle="modal" data-target="#frameModalBottom">Adicionar <b>{{ city_name }}</b> aos favoritos</button>
+                                </form>
+                            {% else %}
+                                <form class="user" action="{% url 'add_favorite' %}" method="post">
+                                    <div hidden class="form-group mx-sm-3 mb-2">
+                                        <input hiddden type="text" name="cityText" class="form-control form-control-user" id="cityn" value="{{city_name}}">
+                                    </div>
+                                    <div hidden class="form-group mx-sm-3 mb-2">
+                                        <input hiddden type="text" name="cityid" class="form-control form-control-user" id="city_id" value="{{city_id}}">
+                                    </div>
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success waves-effect btn-md" data-toggle="modal" data-target="#frameModalBottom">Adicionar <b>{{ city_name }}</b> aos favoritos</button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -55,10 +67,11 @@
                     <div class="modal-content">
                       <div class="modal-body">
                         <div class="row d-flex justify-content-center align-items-center">
-
-                          <p class="pt-3 pr-2">A cidade {{ city_name }} foi adicionada aos favoritos
-                          </p>
-                          <button type="button" class="btn btn-md btn-success" data-dismiss="modal">Confirmar</button>
+                          {% if city_bd == 'False' %}
+                            <p class="pt-3 pr-2">A cidade {{ city_name }} foi adicionada aos favoritos!</p>
+                          {% else %}
+                            <p class="pt-3 pr-2">A cidade {{ city_name }} já se encontra nos favoritos!</p>
+                          {% endif %}
                         </div>
                       </div>
                     </div>
