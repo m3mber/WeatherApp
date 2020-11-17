@@ -388,7 +388,7 @@ def favorite_cities_info(email):
 #*************************************************************************************
 def add_favorite_citie(request):
     city_name = request.POST['cityText']
-    city_id = request.POST['cityid']
+    city_id = findCityId(city_name)
     bd_cities_empty = verify_empty_cities_bd(request.user.email)
 
 
@@ -402,9 +402,9 @@ def add_favorite_citie(request):
 
     try:
         if bd_cities_empty:
-            query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidades>{<cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade>}</cidades> after $x/mail"
+            query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade> into $x/cidades"
         else:
-            query = "let $us := doc('users') for $u in $us/users/user/cidades/cidade[last()] return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+city_name+"</nome> } </cidade> after $u"
+            query = "let $us := doc('users') for $u in $us/users/user/ where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+city_name+"</nome> } </cidade> after $u/cidades/cidade[last()]"
 
         queryResult = session.query(query)
         queryResult.execute()
@@ -424,7 +424,7 @@ def remove_favorite_cities(request):
         print("ERRO: impossivel criar sessão no BaseXServer!")
 
     try:
-        query = "let $us := doc('users') for $u in $us//user where $u/mail = '"+ request.user.email+ "' let $xs := $u//cidade for $x in $xs where $x/id = '"+findCityId(name)+"' return delete node $x"
+        query = "let $us := doc('users') for $u in $us//user where $u/mail = '"+ request.user.email+ "' let $xs := $u//cidade for $x in $xs where $x/nome = '"+name+"' return delete node $x"
         queryResult = session.query(query)
         queryResult.execute()
         queryResult.close()
@@ -450,9 +450,10 @@ def verify_empty_cities_bd(email):
 
 
         for type, item in queryResult.iter():
+            print(type, " - ", item)
             check += 1
 
-        if check > 3: #Ter a certeza que está mesmo vazia
+        if check > 1: #Ter a certeza que está mesmo vazia
             bd_empty = False
         else:
             bd_empty = True

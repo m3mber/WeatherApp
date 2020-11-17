@@ -242,6 +242,11 @@
                 <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
             </xsl:if>
 
+            <xsl:if test="tempo= 'pc' ">
+                <h5 class="text-white">Prob. chuva todo dia</h5>
+                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+            </xsl:if>
+
         </xsl:for-each>
 
 
