@@ -4,12 +4,7 @@
     <xsl:template match="/">
 
             <div class="d-flex justify-content-lg-between">
-                <xsl:for-each select="cidade/manha">
-                    <!--li class="list-group-item">Altura: <xsl:value-of select="altura"/> m</li>
-                    <li class="list-group-item">Agitação: <xsl:value-of select="agitacao"/></li>
-                    <li class="list-group-item">Direção Ondas: <xsl:value-of select="direcao"/></li>
-                    <li class="list-group-item">Vento: <xsl:value-of select="vento"/> km/h</li>
-                    <li class="list-group-item">Direção Vento: <xsl:value-of select="vento_dir"/></li-->
+                <xsl:for-each select="cidade/previsao[1]">
                     <p></p>
                     <h5>Altura: <xsl:value-of select="altura"/> m</h5>
                     <h5>Agitação: <xsl:value-of select="agitacao"/></h5>

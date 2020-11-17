@@ -4,7 +4,7 @@
     <xsl:template match="/">
 
 
-        <xsl:for-each select="cidade/manha">
+        <xsl:for-each select="cidade/previsao[1]">
             
             <xsl:if test="agitacao = 'Fraco'">
                 <img

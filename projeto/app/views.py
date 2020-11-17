@@ -112,18 +112,11 @@ def waves_card(request):
             city_name=request.GET['name']
             city_id= findCityId(city_name)
         if city_id!=0:
-            url_ondas = 'http://servicos.cptec.inpe.br/XML/cidade/' + str(city_id) +'/dia/0/ondas.xml'
-            with urlopen(url_ondas) as d:
-                xml_ondas = etree.parse(d)
+            url_ondas = 'http://servicos.cptec.inpe.br/XML/cidade/'+ str(city_id) +'/todos/tempos/ondas.xml'
+            try:
+                with urlopen(url_ondas) as d:
+                    xml_ondas = etree.parse(d)
 
-            if xml_ondas.xpath('//nome')[0].text == '' or xml_ondas.xpath('//nome')[0].text == 'undefined':
-                context = {
-                    'city_name': city_name,
-                    'forecast': '',
-                    'image': '',
-                    'day': day_card(),
-                }
-            else:
                 #Template da ondulação
                 xslt_path = os.path.join(BASE_DIR, "app", "static","xml","ondulacao.xsl")
                 xslt_file = etree.parse(xslt_path)
@@ -174,6 +167,14 @@ def waves_card(request):
                     'day': day_card(),
                     'coments': coments,
                     'city_id': city_id,
+                }
+
+            except:
+                context = {
+                    'city_name': city_name,
+                    'forecast': '',
+                    'image': '',
+                    'day': day_card(),
                 }
         else:
             context = {
@@ -239,7 +240,7 @@ def signup(request):
             try:
                 query1.execute()
                 query1.close()
-                input2 = "let $us := doc('users') for $u in $us/users/user[last()] return insert node <user> { <mail>" +user.email +"</mail> } </user> after $u"
+                input2 = "let $us := doc('users') for $u in $us/users/user[last()] return insert node <user> { <mail>" +user.email +"</mail>, <cidades></cidades>, <comentarios></comentarios> } </user> after $u"
                 query2 = session.query(input2)
                 query2.execute()
                 query2.close()

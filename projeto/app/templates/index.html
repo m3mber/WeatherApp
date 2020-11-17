@@ -12,9 +12,10 @@
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 		  <div class="col">
-		    <div class="card" style="max-width: 20rem">
+		    <div class="card" style="max-width: 22rem">
+		      {% load static %}
 		      <img
-			src="https://blog.rentcars.com/wp-content/uploads/2019/10/things-to-do-rio-de-janeiro-1.jpg"
+			src="{% static 'images/rio.jpeg' %}"
 			class="card-img-top"
 			alt="..."
 		      />
@@ -29,9 +30,9 @@
 		    </div>
 		  </div>
 		  <div class="col">
-		    <div class="card" style="max-width: 20rem">
+		    <div class="card" style="max-width: 22rem">
 		      <img
-			src="https://www.avianca.com/content/dam/avianca_new/destinos/gru/br_gru_ciudad_2880_1620_03.jpg"
+			src="{% static 'images/saopaulo.jpg' %}"
 			class="card-img-top"
 			alt="..."
 		      />
@@ -46,9 +47,9 @@
 		    </div>
 		  </div>
 		  <div class="col">
-		    <div class="card" style="max-width: 20rem">
+		    <div class="card" style="max-width: 22rem">
 		      <img
-			src="https://mdbootstrap.com/img/new/standard/city/043.jpg"
+			src="{% static 'images/brasilia.jpg' %}"
 			class="card-img-top"
 			alt="..."
 		      />
@@ -69,7 +70,7 @@
 
 
                 <div class="col">
-                    <div class="card" style="max-width:40rem;">
+                    <div class="card" style="max-width:35rem;">
 
                       <div class="card-body">
                         <div class="container-fluid">
