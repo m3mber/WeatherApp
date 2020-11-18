@@ -18,6 +18,8 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import feedparser
+
+
 # Create your views here.
 def index(request):
     feed = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/241/previsao.xml')
@@ -287,7 +289,6 @@ def signup(request):
 #*********************************************************************************************
 def myaccount(request):
     context={
-        'text':"ola"
     }
     return render(request, 'myaccount.html', context) 
 
@@ -348,20 +349,27 @@ def day_card():
             data[1] = 'de Novembro'
         if item == 'December':
             data[1] = 'de Dezembro'
+        if item == 'March':
+            data[1] = 'de Março'
+        if item == 'April':
+            data[1] = 'de Abril'
+        if item == 'May':
+            data[1] = 'de Maio'
+        if item == 'June':
+            data[1] = 'de Junho'
+        if item == 'July':
+            data[1] = 'de Julho'
+        if item == 'August':
+            data[1] = 'de Agosto'
+        if item == 'September':
+            data[1] = 'de Setembro'
+        if item == 'October':
+            data[1] = 'de Outubro'
 
     data_pt = " ".join(data)
 
 
     return data_pt
-
-#*************************************************************************************
-def is_xml_valid(xml, xsd):
-    # Load XSD file
-    xsd_root = etree.parse(xsd)
-    xsd = etree.XMLSchema(xsd_root)
-
-    # Validate XML file
-    return xsd.validate(xml)
 
 #*************************************************************************************
 def favorite_cities_info(email):
