@@ -52,7 +52,7 @@ def submitEmail(request):
             
             session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
             if not session:
-                print("ERRO: impossivel criar sessão no BaseXServer ")
+                return render(request, 'erro.html', {"erro":'ERRO: impossivel abrir sessão na BaseX'})
 
             try:
                 file_query = open(os.path.join(BASE_DIR, "app", "static","xml","change_email.xq"),'r')
@@ -377,7 +377,7 @@ def favorite_cities_info(email):
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer ")
+        return render(request, 'erro.html', {"erro":'ERRO: Impossível abrir sessão na BaseX'})
 
     #Buscar as cidades favoritas de um determinado utilizador
     try:
@@ -432,11 +432,11 @@ def add_favorite_citie(request):
     city_id = findCityId(city_name)
     bd_cities_empty = verify_empty_cities_bd(request.user.email)
     if bd_cities_empty is None:
-        print("ERRO: algo aconteceu na verificação da base de dados")
+        return render(request, 'erro.html', {"erro":'ERRO: algo aconteceu na verificação da base de dados'})
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer ")
+        return render(request, 'erro.html', {"erro":'ERRO: Impossivel criar sessão no BaseXServer '})
 
     try:
         query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade> into $x/cidades"
@@ -456,7 +456,7 @@ def remove_favorite_cities(request):
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer!")
+        return render(request, 'erro.html', {"erro":'ERRO: Impossivel criar sessão no BaseXServer!'})
 
     try:
         query = "let $us := doc('users') for $u in $us//user where $u/mail = '"+ request.user.email+ "' let $xs := $u//cidade for $x in $xs where $x/nome = '"+name+"' return delete node $x"
@@ -477,7 +477,7 @@ def verify_empty_cities_bd(email):
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer ")
+        return render(request, 'erro.html', {"erro":'ERRO: Impossivel criar sessão no BaseXServer!'})
 
     try:
         query = "let $us := doc('users') for $u in $us//user where lower-case($u/mail) = '"+email+"' for $c in $u return $c/cidades"
@@ -485,7 +485,6 @@ def verify_empty_cities_bd(email):
 
 
         for type, item in queryResult.iter():
-            print(type, " - ", item)
             check += 1
 
         if check > 1: #Ter a certeza que está mesmo vazia
@@ -508,7 +507,7 @@ def verify_if_city_bd(email,city_name):
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 
     if not session:
-        print("ERRO: impossivel criar sessão no BaseXServer ")
+        return render(request, 'erro.html', {"erro":'ERRO: Impossivel criar sessão no BaseXServer!'})
 
     try:
         query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+email+"' for $c in $x//cidade where $c/nome = '"+city_name+"' return data($c/nome)"
