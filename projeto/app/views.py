@@ -23,9 +23,9 @@ def index(request):
     feed = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/241/previsao.xml')
     description=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
     feed2 = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/244/previsao.xml')
-    description2=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
+    description2=feed2.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
     feed3 = feedparser.parse('http://servicos.cptec.inpe.br/RSS/cidade/224/previsao.xml')
-    description3=feed.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
+    description3=feed3.entries[0].description.replace('Previsão para os próximos dias:','').split('/>')
     context={
         "title":feed.entries[0].title,
         "image":description[0],
@@ -41,6 +41,18 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def submitEmail(request):
+    if 'mail' in request.POST and 'username' in request.POST:
+        mail=request.POST['mail']
+        username = request.POST['username']
+        User  = get_user_model()
+        if mail != "":
+            User.objects.filter(username=username).update(email=mail)
+
+
+            
+    return HttpResponseRedirect(reverse('conta'))
+    
 
 #********************* 7 DAY WEATHER WIDGET ********************************
 #*****************************************************************************
@@ -364,15 +376,18 @@ def favorite_cities_info(email):
                 min_temp = c.find('minima').text
 
             url_city_ondas = "http://servicos.cptec.inpe.br/XML/cidade/" + id + "/todos/tempos/ondas.xml"
-            file = urlopen(url_city_ondas).read()
-            xml_city_wave = etree.fromstring(file)
+            try:
+                file = urlopen(url_city_ondas).read()
+                xml_city_wave = etree.fromstring(file)
 
-            # Buscar as condições de mar
-            query1 = "/cidade/previsao[1]"
-            waves = xml_city_wave.xpath(query1)
+                # Buscar as condições de mar
+                query1 = "/cidade/previsao[1]"
+                waves = xml_city_wave.xpath(query1)
 
-            for w in waves:
-                sea_state = w.find('agitacao').text
+                for w in waves:
+                    sea_state = w.find('agitacao').text
+            except:
+                    sea_state = "Sem informação"
 
 
             #Dicionário da cidade: key=(nome da cidade) values=(são os dados do dia de hoje)
@@ -389,22 +404,16 @@ def favorite_cities_info(email):
 def add_favorite_citie(request):
     city_name = request.POST['cityText']
     city_id = findCityId(city_name)
-    bd_cities_empty = verify_empty_cities_bd(request.user.email)
-
 
     if bd_cities_empty is None:
         print("ERRO: algo aconteceu na verificação da base de dados")
-
 
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
     if not session:
         print("ERRO: impossivel criar sessão no BaseXServer ")
 
     try:
-        if bd_cities_empty:
-            query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade> into $x/cidades"
-        else:
-            query = "let $us := doc('users') for $u in $us/users/user/ where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>"+city_id+"</id>, <nome>"+city_name+"</nome> } </cidade> after $u/cidades/cidade[last()]"
+        query = "let $us := doc('users') for $x in $us/users/user where $x/mail = '"+request.user.email+"' return insert node <cidade> { <id>" + city_id + "</id>, <nome>" + city_name + "</nome> } </cidade> into $x/cidades"
 
         queryResult = session.query(query)
         queryResult.execute()
@@ -436,7 +445,7 @@ def remove_favorite_cities(request):
     return HttpResponseRedirect(reverse('favoritos') +'?name=' + name)
 
 #*************************************************************************************
-def verify_empty_cities_bd(email):
+'''def verify_empty_cities_bd(email):
     check = 0
     bd_empty = None
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
@@ -465,7 +474,7 @@ def verify_empty_cities_bd(email):
         if session:
             session.close()
 
-    return bd_empty
+    return bd_empty'''
 
 #*************************************************************************************
 def verify_if_city_bd(email,city_name):
