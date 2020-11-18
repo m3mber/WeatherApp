@@ -31,6 +31,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.signup, name='signup'),
     path('myaccount/', views.myaccount, name='conta'),
+    path('submit_edit/', views.submitEmail, name='submit'),
     path('add_favorite/', views.add_favorite_citie, name='add_favorite'),
     path('remove_city/', views.remove_favorite_cities, name='remove_city')
 ]

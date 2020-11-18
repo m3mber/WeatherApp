@@ -47,9 +47,27 @@ def submitEmail(request):
         username = request.POST['username']
         User  = get_user_model()
         if mail != "":
-            User.objects.filter(username=username).update(email=mail)
+            
+            session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+            if not session:
+                print("ERRO: impossivel criar sessão no BaseXServer ")
 
+            try:
+                file_query = open(os.path.join(BASE_DIR, "app", "static","xml","change_email.xq"),'r')
+                query = file_query.read().replace("var1",request.user.email).replace("var2",mail)
 
+                queryResult = session.query(query)
+                queryResult.execute()
+                queryResult.close()
+                User.objects.filter(username=username).update(email=mail)
+
+            except Exception as e:
+                return render(request, 'erro.html', {"erro":e})
+            
+            finally:
+                queryResult.close()
+                if session:
+                    session.close()
             
     return HttpResponseRedirect(reverse('conta'))
     
@@ -404,7 +422,7 @@ def favorite_cities_info(email):
 def add_favorite_citie(request):
     city_name = request.POST['cityText']
     city_id = findCityId(city_name)
-
+    bd_cities_empty = verify_empty_cities_bd(request.user.email)
     if bd_cities_empty is None:
         print("ERRO: algo aconteceu na verificação da base de dados")
 
@@ -445,7 +463,7 @@ def remove_favorite_cities(request):
     return HttpResponseRedirect(reverse('favoritos') +'?name=' + name)
 
 #*************************************************************************************
-'''def verify_empty_cities_bd(email):
+def verify_empty_cities_bd(email):
     check = 0
     bd_empty = None
     session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
@@ -474,7 +492,7 @@ def remove_favorite_cities(request):
         if session:
             session.close()
 
-    return bd_empty'''
+    return bd_empty
 
 #*************************************************************************************
 def verify_if_city_bd(email,city_name):
