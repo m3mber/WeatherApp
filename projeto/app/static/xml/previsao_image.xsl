@@ -12,7 +12,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Encoberto com chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ci	Chuvas Isoladas -->
@@ -21,7 +21,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva isolada</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- c	Chuva -->
@@ -30,7 +30,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- in	Instável -->
@@ -48,7 +48,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Pancadas de chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- cm	Chuva pela Manhã -->
@@ -57,7 +57,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva pela manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- cn	Chuva a Noite -->
@@ -66,7 +66,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva à noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- pt	Pancadas de Chuva a Tarde -->
@@ -75,7 +75,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva à tarde</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
 
@@ -85,7 +85,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Pancadas de chuva, manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- np	Nublado e Pancadas de Chuva -->
@@ -94,7 +94,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com panc. chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- pn	Parcialmente Nublado -->
@@ -103,7 +103,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Parcialmente nublado</p>
                </div>
-                <img src="https://acreagora.com/wp-content/uploads/2019/03/temponublado.jpg" />
+                <img src="https://www.agraer.ms.gov.br/wp-content/uploads/2020/01/Tempo-Sol-entre-nuvens-Foto-Edemir-Rodrigues-1.jpg" />
             </xsl:if>
 
             <!-- cv	Chuvisco -->
@@ -112,7 +112,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuvisco</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ch	Chuvoso -->
@@ -121,7 +121,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuvoso</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- t	Tempestade -->
@@ -211,7 +211,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuvisco à noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- psc	Possibilidade de Chuva -->
@@ -220,7 +220,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Possibilidade chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- pcm	Possibilidade de Chuva pela Manhã -->
@@ -229,7 +229,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Possibilidade chuva, manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- pct	Possibilidade de Chuva a Tarde -->
@@ -238,7 +238,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Possibilidade chuva, tarde</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- pcn	Possibilidade de Chuva a Noite -->
@@ -247,7 +247,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Possibilidade chuva, noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- npt	Nublado com Pancadas a Tarde -->
@@ -257,7 +257,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva, tarde</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- npn	Nublado com Pancadas a Noite -->
@@ -266,7 +266,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ncn	Nublado com Poss. de Chuva a Noite -->
@@ -275,7 +275,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva, noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- nct	Nublado com Poss. de Chuva a Tarde -->
@@ -284,7 +284,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva tarde</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ncm	Nubl. c/ Poss. de Chuva pela Manhã -->
@@ -293,7 +293,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva, manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- npm	Nublado com Pancadas pela Manhã -->
@@ -302,7 +302,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva, manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- npp	Nublado com Possibilidade de Chuva -->
@@ -311,7 +311,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- vn	Variação de Nebulosidade -->
@@ -330,7 +330,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Nublado com chuva, manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ppn	Poss. de Panc. de Chuva a Noite -->
@@ -339,7 +339,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva à noite</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ppt	Poss. de Panc. de Chuva a Tarde -->
@@ -348,7 +348,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva pela tarde</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <!-- ppm	Poss. de Panc. de Chuva pela Manhã -->
@@ -357,7 +357,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva pela manhã</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
             <xsl:if test="tempo= 'pc' ">
@@ -365,7 +365,7 @@
                     <p class="text-white">Cidade: <b><xsl:value-of select="/cidade/nome"/></b></p>
                     <p class="text-white">Condição: Chuva dia todo</p>
                </div>
-                <img src="https://mynorthwest.com/wp-content/uploads/2019/11/seattle-rain-620-flickr.jpg" />
+                <img src="https://static-wp-canalr-prd.canalrural.com.br/2019/03/car-drops-of-water-glass-155328129.jpg" />
             </xsl:if>
 
         </xsl:for-each>
