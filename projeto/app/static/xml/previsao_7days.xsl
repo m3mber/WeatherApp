@@ -623,8 +623,8 @@
                         </div>
 
                  
-<div class="col-lg-2 col-6 p-2">
-                            <p> <xsl:value-of select="cidade/previsao[3]/dia"/> </p>
+						<div class="col-lg-2 col-6 p-2">
+                            <p> <xsl:value-of select="cidade/previsao[4]/dia"/> </p>
 
                             <xsl:if test="cidade/previsao[4]/tempo = 'c' ">
                                 <p class="fas fa-cloud-rain" style='font-size:36px; color:blue'></p>
@@ -828,8 +828,8 @@
                             <p class="text-info"> <xsl:value-of select="cidade/previsao[4]/minima"/>º </p>
                         </div>
                             
-<div class="col-lg-2 col-6 p-2">
-                            <p> <xsl:value-of select="cidade/previsao[3]/dia"/> </p>
+						<div class="col-lg-2 col-6 p-2">
+                            <p> <xsl:value-of select="cidade/previsao[5]/dia"/> </p>
 
                             <xsl:if test="cidade/previsao[5]/tempo = 'c' ">
                                 <p class="fas fa-cloud-rain" style='font-size:36px; color:blue'></p>
@@ -1033,8 +1033,8 @@
                             <p class="text-info"> <xsl:value-of select="cidade/previsao[5]/minima"/>º </p>
                         </div>
                          
-<div class="col-lg-2 col-6 p-2">
-                            <p> <xsl:value-of select="cidade/previsao[3]/dia"/> </p>
+						<div class="col-lg-2 col-6 p-2">
+                            <p> <xsl:value-of select="cidade/previsao[6]/dia"/> </p>
 
                             <xsl:if test="cidade/previsao[6]/tempo = 'c' ">
                                 <p class="fas fa-cloud-rain" style='font-size:36px; color:blue'></p>
